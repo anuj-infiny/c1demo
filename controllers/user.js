@@ -18,7 +18,7 @@ exports.getUpdate = (req, res) => {
 };
 
 exports.postUpdate = (req, res) => {
-  User.findOneAndUpdate({ _id: req.user._id }, { email : req.body.email }, {upsert:true}, function(err, user){
+  User.findOneAndUpdate({ _id: req.user._id }, { email : req.body.email }, {upsert:false}, function(err, user){
       req.user.email = req.body.email;
       req.flash('success', {message: "Email updated"});
       return res.redirect('/user/update');

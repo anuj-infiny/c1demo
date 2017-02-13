@@ -151,7 +151,9 @@ app.get('/admin/delete_user/:id', passportConfig.isAuthenticated, adminControlle
 
 app.get('/admin/manage_groups', passportConfig.isAuthenticated, adminController.manageGroups);
 app.post('/admin/create_group', passportConfig.isAuthenticated, adminController.createGroup);
+app.post('/admin/update_group', passportConfig.isAuthenticated, adminController.updateGroup);
 app.get('/admin/delete_group/:id', passportConfig.isAuthenticated, adminController.deleteGroup);
+
 app.get('/admin/update_password', passportConfig.isAuthenticated, adminController.getUpdatePassword);
 
 /**

@@ -67,6 +67,15 @@ exports.createGroup = (req, res) => {
   	
 };
 
+
+exports.updateGroup = (req, res) => {
+
+	Group.findOneAndUpdate({ _id: req.body.group_id }, { group : req.body.group }, {upsert:false}, function(err, user){
+      req.flash('success', {message: "Group name updated"});
+      return res.redirect('/admin/manage_groups');
+  	});
+};
+
 exports.deleteGroup = (req, res) => {
 	Group.remove({ _id: req.params.id }, function(err) {
 	    if (!err) {

@@ -71,7 +71,7 @@
         </button>
         <h5 class="modal-title" id="exampleModalLabel">Edit Group</h5>
       </div>
-      <form method="post" action="/admin/create_group">
+      <form method="post" action="/admin/update_group">
 	      <div class="modal-body">
 		        	<div class="form-group row">
 			            <div class="col-md-3">
@@ -79,6 +79,7 @@
 			            </div>
 			            <div class="col-md-9">
 			                <input type="text" name="group" id="group-edit" class="form-control" placeholder="Group" required>
+			                <input type="hidden" name="group_id" id="group-id">
 			            </div>
 			        </div>
 	      </div>
@@ -147,6 +148,7 @@
         	sel_group_id = $(this).data('id');
         	var group = $(this).data('group');
         	$('#group-edit').val(group);
+        	$('#group-id').val(sel_group_id);
         	$('#editGroupModal').modal('show');
         });
     });
