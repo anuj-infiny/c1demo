@@ -141,6 +141,8 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 app.get('/user', passportConfig.isAuthenticated, userController.index);
 app.get('/user/update', passportConfig.isAuthenticated, userController.getUpdate);
 app.post('/user/update', passportConfig.isAuthenticated, userController.postUpdate);
+app.get('/user/update_password', passportConfig.isAuthenticated, userController.getUpdatePassword);
+app.post('/user/update_password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 
 app.get('/admin', passportConfig.isAuthenticated, adminController.index);
 app.get('/admin/manage_users', passportConfig.isAuthenticated, adminController.manageUsers);
@@ -150,6 +152,7 @@ app.get('/admin/delete_user/:id', passportConfig.isAuthenticated, adminControlle
 app.get('/admin/manage_groups', passportConfig.isAuthenticated, adminController.manageGroups);
 app.post('/admin/create_group', passportConfig.isAuthenticated, adminController.createGroup);
 app.get('/admin/delete_group/:id', passportConfig.isAuthenticated, adminController.deleteGroup);
+app.get('/admin/update_password', passportConfig.isAuthenticated, adminController.getUpdatePassword);
 
 /**
  * Error Handler.

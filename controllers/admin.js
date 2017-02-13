@@ -79,3 +79,8 @@ exports.deleteGroup = (req, res) => {
 	});
 
 }; 
+
+
+exports.getUpdatePassword = (req, res) => {
+  res.render('admin/update_password', {title: 'Change Password', tab: ''});
+};

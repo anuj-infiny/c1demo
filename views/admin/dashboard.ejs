@@ -2,6 +2,35 @@
 <%- include partials/left_nav.ejs %>
 <%- include partials/top_nav.ejs %>
 
+<section class="page-content">
+	<section class="panel">
+		<div class="panel-heading">
+	        <h3>
+	           Dashboard
+	        </h3>
+	    </div>
+		<div class="panel-body">
+			<div>
+				<%if (messages.errors) { %>
+	                <div class="alert alert-danger" role="alert">
+	                	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                		<span aria-hidden="true">×</span>
+	                	</button>
+	                	<%= messages.errors[0].messages || messages.errors[0].msg %>
+	                </div>
+	            <% } %>
+	            <%if (messages.success) { %>
+	                <div class="alert alert-success" role="alert">
+	                	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                		<span aria-hidden="true">×</span>
+	                	</button>
+	                	<%= messages.success[0].messages || messages.success[0].msg %>
+	                </div>
+	            <% } %>
+			</div>
+		</div>
+	</section>
+</section>
 
 <%- contentFor('page_script') %>
 <!-- Page Scripts -->

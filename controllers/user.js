@@ -25,6 +25,10 @@ exports.postUpdate = (req, res) => {
   });
 };
 
+exports.getUpdatePassword = (req, res) => {
+  res.render('user/update_password');
+};
+
 exports.getLogin = (req, res) => {
   if (req.user) {
     return res.redirect('/');
@@ -174,13 +178,13 @@ exports.postUpdateProfile = (req, res, next) => {
  */
 exports.postUpdatePassword = (req, res, next) => {
   req.assert('password', 'Password must be at least 4 characters long').len(4);
-  req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
+  req.assert('confirm_password', 'Passwords do not match').equals(req.body.password);
 
   const errors = req.validationErrors();
 
   if (errors) {
     req.flash('errors', errors);
-    return res.redirect('/account');
+    return res.redirect('/');
   }
 
   User.findById(req.user.id, (err, user) => {
@@ -189,7 +193,7 @@ exports.postUpdatePassword = (req, res, next) => {
     user.save((err) => {
       if (err) { return next(err); }
       req.flash('success', { msg: 'Password has been changed.' });
-      res.redirect('/account');
+      res.redirect('/');
     });
   });
 };
