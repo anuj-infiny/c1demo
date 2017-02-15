@@ -10,5 +10,5 @@ mongoose.connection.on('error', () => {
   console.log('MongoDB connection error. Please make sure MongoDB is running.');
   process.exit();
 });
-
+console.log('MongoDB connection establish');
 User.create({ username: 'admin', email: 'admin@admin.com', password: 'aaaaaa', profile: {name: 'Admin'}, userType: 'ADMIN' });

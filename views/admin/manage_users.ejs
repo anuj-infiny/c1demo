@@ -1,6 +1,5 @@
 <%- contentFor('body') %>
-<%- include partials/left_nav.ejs %>
-<%- include partials/top_nav.ejs %>
+
 <section class="page-content">
 	<section class="panel">
 		<div class="panel-heading">
@@ -11,7 +10,7 @@
 		<div class="panel-body">
 			<div class="row">
 				<div class="pull-right">
-					<a href="#" class="btn btn-success margin-inline" data-toggle="modal" data-target="#createUserModal">Create User</a>
+					<a href="#" class="btn btn-success margin-inline"  ng-click="open()">Create User</a>
 				</div>
 			</div>
 			<div>
@@ -112,7 +111,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div  class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -178,7 +177,7 @@
 <!-- Page Scripts -->
 
 <script>
-	var sel_group_id;
+	var sel_group_id;html/index.html
     $(function(){
 
         $('#example1').DataTable({

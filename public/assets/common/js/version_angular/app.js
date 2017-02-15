@@ -14,8 +14,8 @@ angular.module('cleanUI', [
 
         /////////////////////////////////////////////////////////////
         // Documentation
-        $routeProvider.when('/documentation/index', {
-            templateUrl: 'documentation/index.html'
+        $routeProvider.when('/admin/manage_groups', {
+            templateUrl: '/admin/manage_groups'
         });
 
         /////////////////////////////////////////////////////////////

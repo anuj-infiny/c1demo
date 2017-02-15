@@ -53,7 +53,9 @@ mongoose.connection.on('error', () => {
   console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
   process.exit();
 });
-
+/*const User = require('./models/User');
+User.create({ username: 'admin', email: 'admin@admin.com', password: 'aaaaaa', profile: {name: 'Admin'}, userType: 'ADMIN' });
+console.log('connected to mongo');*/
 /**
  * Express configuration.
  */
@@ -119,7 +121,7 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
  */
 app.get('/', passportConfig.isAuthenticated, function(req, res){
     if(req.user.userType == 'ADMIN'){
-        return res.redirect('/admin');
+        return res.redirect('/dashboard/admin/index.html');
     } else{
         return res.redirect('/user');
     }
@@ -144,7 +146,7 @@ app.post('/user/update', passportConfig.isAuthenticated, userController.postUpda
 app.get('/user/update_password', passportConfig.isAuthenticated, userController.getUpdatePassword);
 app.post('/user/update_password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 
-app.get('/admin', passportConfig.isAuthenticated, adminController.index);
+app.get('/admin/dashboard', passportConfig.isAuthenticated, adminController.index);
 app.get('/admin/manage_users', passportConfig.isAuthenticated, adminController.manageUsers);
 app.post('/admin/create_user', passportConfig.isAuthenticated, adminController.createUser);
 app.get('/admin/delete_user/:id', passportConfig.isAuthenticated, adminController.deleteUser);

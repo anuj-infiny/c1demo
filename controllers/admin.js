@@ -1,14 +1,16 @@
 const Group = require('../models/Group');
 const User = require('../models/User');
+var ObjectID = require('mongodb').ObjectID;
+
 
 exports.index = (req, res) => {
-  res.render('admin/dashboard', {title: 'Dashboard', tab: ''});
+  res.render('admin/dashboard', {title: 'Dashboard', tab: '', layout: 'base'});
 };
 
 exports.manageUsers = (req, res) => {
 	User.find(function (err, users) {
 		Group.find(function (err, groups) {
-			res.render('admin/manage_users', {title: 'Manage Groups', tab: 'manage_groups', users: users, groups : groups});
+			res.render('admin/manage_users', {title: 'Manage Groups', tab: 'manage_groups',  layout: 'base', users: users, groups : groups});
 		});
 	});
 };
@@ -45,7 +47,7 @@ exports.deleteUser = (req, res) => {
 
 exports.manageGroups = (req, res) => {
 	Group.find(function (err, groups) {
-		res.render('admin/manage_groups', {title: 'Manage Groups', tab: 'manage_groups', groups : groups});
+		res.render('admin/manage_groups', {title: 'Manage Groups',  layout: 'base', tab: 'manage_groups', groups : groups});
 	});
 };
 
@@ -53,13 +55,26 @@ exports.createGroup = (req, res) => {
 	Group.findOne({group: req.body.group}, (err, group) => {
 	    if (err) { return done(err); }
 	    if (group) {
-	      req.flash('errors', {message: 'Group already exists'});
-	      return res.redirect('/admin/manage_groups');
+	    	  res.send({
+             success: false,
+              msg: 'Group already exists',
+              data:group
+
+            });
+	      //req.flash('errors', {message: 'Group already exists'});
+	      //return res.redirect('/admin/manage_groups');
 	    } else {
 	    	Group.create({group: req.body.group}, function (err, group) {
 			  if (err) return handleError(err);
-			  req.flash('success', {message: 'Group created'});
-			  return res.redirect('/admin/manage_groups');
+			  //req.flash('success', {message: 'Group created'});
+			  /*return res.redirect('/admin/manage_groups');*/
+             res.send({
+             success: true,
+              msg: 'success',
+              data:group
+
+            });
+
 			});
 	    }
 	   
@@ -75,16 +90,32 @@ exports.updateGroup = (req, res) => {
       return res.redirect('/admin/manage_groups');
   	});
 };
-
 exports.deleteGroup = (req, res) => {
-	Group.remove({ _id: req.params.id }, function(err) {
+	var t=(req.params.id).toSting;
+	
+	Group.remove({ _id: ObjectID(t) }, function(err) {
+	   console.log(err);
 	    if (!err) {
-	        req.flash('success', {message: 'Group deleted'});
+	    	res.send({
+             success: true,
+              msg: 'Group deleted'
+              
+
+            });
+	    	console.log("SDasdsad");
+	        /*req.flash('success', {message: 'Group deleted'});*/
 	    }
 	    else {
-	        req.flash('errors', {message: 'Group not deleted'});
+	    	res.send({
+             success: false,
+              msg: 'Group not deleted'
+              
+
+            });
+            
+	       /* req.flash('errors', {message: 'Group not deleted'});*/
 	    }
-	    return res.redirect('/admin/manage_groups');
+	    /*return res.redirect('/admin/manage_groups');*/
 	});
 
 }; 

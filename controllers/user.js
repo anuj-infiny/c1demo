@@ -30,6 +30,7 @@ exports.getUpdatePassword = (req, res) => {
 };
 
 exports.getLogin = (req, res) => {
+
   if (req.user) {
     return res.redirect('/');
   }
@@ -41,6 +42,7 @@ exports.getLogin = (req, res) => {
  * Sign in using email and password.
  */
 exports.postLogin = (req, res, next) => {
+  console.log("here ");
   req.assert('password', 'Password cannot be blank').notEmpty();
 
   const errors = req.validationErrors();
