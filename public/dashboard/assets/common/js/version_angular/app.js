@@ -437,8 +437,7 @@ $scope.groupName="";
 
 $scope.usertype={};
 $scope.user.userType="ADMIN";
-$scope.user.firstname="";
-$scope.user.lastname="";
+$scope.user.userGroup="";
 $scope.user.username="";
 $scope.user.password="";
 $scope.usertype.showvalue=false;
@@ -468,11 +467,28 @@ $scope.editProfile=function(e)
         });   
 
 }
+   $scope.profileInit=function()
+   {
+    
+   }
+
+
 $scope.profileScreen=function()
 {
-    
      $location.path("/admin/profile");
-
+    /*$http.post("/user/getProfile").then(function (result) {
+              if (result.data.success) {
+                console.log("success");
+                 $scope.user=result.data.data;
+                 console.log(result.data.data);
+                
+                 //$location.path('/admin/manage_groups');
+              } else {
+                
+              }
+        });   */
+    
+    
 }
 
 $scope.createUser=function()
