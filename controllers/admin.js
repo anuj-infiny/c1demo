@@ -19,13 +19,36 @@ exports.createUser = (req, res) => {
 	User.findOne({username: req.body.username}, (err, user) => {
 	    if (err) { return done(err); }
 	    if (user) {
-	      req.flash('errors', {message: 'User already exists'});
-	      return res.redirect('/admin/manage_users');
+	    	 res.send({
+             success: true,
+              msg: 'user already exists',
+              data:user
+
+            });
+
+	     /* req.flash('errors', {message: 'User already exists'});
+	      return res.redirect('/admin/manage_users');*/
 	    } else {
-	    	User.create({username: req.body.username, password: req.body.password, userType: req.body.userType}, function (err, group) {
+	    	console.log(req.body.username);
+	    	console.log(req.body.password);
+	    	console.log(req.body.userType);
+	    	var profile={};
+	    	profile.firstname=req.body.firstname;
+	    	profile.lastname=req.body.lastname;
+	    	User.create({username: req.body.username, password: req.body.password, userType: req.body.userType,profile: profile}, function (err, user) {
+			  console.log(err);
 			  if (err) return handleError(err);
-			  req.flash('success', {message: 'User created'});
-			  return res.redirect('/admin/manage_users');
+			  else
+			  {
+			 res.send({
+             success: true,
+              msg: 'user create successfully',
+              data:user
+
+            });
+			}
+			  /*req.flash('success', {message: 'User created'});
+			  return res.redirect('/admin/manage_users');*/
 			});
 	    }
 	   
@@ -33,14 +56,21 @@ exports.createUser = (req, res) => {
 };
 
 exports.deleteUser = (req, res) => {
+	console.log(req.params.id);
 	User.remove({ _id: req.params.id }, function(err) {
-	    if (!err) {
-	        req.flash('success', {message: 'User deleted'});
+    console.log(err);
+	     if (err) return handleError(err); 
+        else
+	     {
+	    	res.send({
+             success: true,
+              msg: 'user deleted'
+              
+
+            });
 	    }
-	    else {
-	        req.flash('errors', {message: 'User not deleted'});
-	    }
-	    return res.redirect('/admin/manage_users');
+	    
+	   // return res.redirect('/admin/manage_users');
 	});
 
 }; 
@@ -84,17 +114,30 @@ exports.createGroup = (req, res) => {
 
 
 exports.updateGroup = (req, res) => {
+    console.log(req.body._id);
+     console.log("id");
+	console.log(req.body.group);
+	Group.findOneAndUpdate({_id: req.body._id }, { group : req.body.group }, {upsert:false}, function(err, user){
+     /* req.flash('success', {message: "Group name updated"});
+      return res.redirect('/admin/manage_groups');*/
+     if (err) { return done(err); }
+	    if (user) {
+	    	  res.send({
+             success: true,
+              msg: 'Group updated',
+              data:user
 
-	Group.findOneAndUpdate({ _id: req.body.group_id }, { group : req.body.group }, {upsert:false}, function(err, user){
-      req.flash('success', {message: "Group name updated"});
-      return res.redirect('/admin/manage_groups');
-  	});
+            });
+  	};
+
+});
 };
 exports.deleteGroup = (req, res) => {
 	var t=(req.params.id).toSting;
+	 console.log(req.params.id);
 	
-	Group.remove({ _id: ObjectID(t) }, function(err) {
-	   console.log(err);
+	Group.remove({ _id: req.params.id }, function(err) {
+	  
 	    if (!err) {
 	    	res.send({
              success: true,
@@ -122,5 +165,11 @@ exports.deleteGroup = (req, res) => {
 
 
 exports.getUpdatePassword = (req, res) => {
-  res.render('admin/update_password', {title: 'Change Password', tab: ''});
+	      
+  res.render('admin/update_password', { layout: 'base' });
 };
+exports.getprofile = (req, res) => {
+        console.log("in admin ");
+  res.render('admin/profile', { layout: 'base' });
+};
+

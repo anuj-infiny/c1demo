@@ -4,12 +4,14 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   username: { type: String, unique: true },
-  email: { type: String, unique: true },
+  email: String,
   password: String,
   passwordResetToken: String,
   passwordResetExpires: Date,
   profile: {
-    name: String
+    name: String,
+    firstname: String,
+    lastname: String
   },
   userType: {type: String, enum: ['ADMIN', 'USER'], default: 'USER'},
   userGroup: String

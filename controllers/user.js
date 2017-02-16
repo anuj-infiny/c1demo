@@ -3,6 +3,9 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const passport = require('passport');
 const User = require('../models/User');
+const mongoose = require('mongoose');
+var Promise = require("bluebird");
+
 
 /**
  * GET /login
@@ -174,11 +177,41 @@ exports.postUpdateProfile = (req, res, next) => {
   });
 };
 
+
+exports.postProfile = (req, res, next) => {
+  console.log(req.body.firstname);
+  console.log(req.body.lastname);
+  User.findById(req.user.id, (err, user) => {
+    if (err) { return next(err); }
+    user.profile.firstname = req.body.firstname;
+    user.profile.lastname=req.body.lastname;
+    user.save((err) => {
+      
+   if (err) { return next(err); }
+    else
+       {
+       res.send({
+             success: true,
+              msg: 'profile updated Successfully ',
+             
+            });
+       }
+
+      /*req.flash('success', { msg: 'Password has been changed.' });
+      res.redirect('/');*/
+    });
+  });
+};
+
+
+
+
 /**
  * POST /account/password
  * Update current password.
  */
 exports.postUpdatePassword = (req, res, next) => {
+  console.log(req.body.password);
   req.assert('password', 'Password must be at least 4 characters long').len(4);
   req.assert('confirm_password', 'Passwords do not match').equals(req.body.password);
 
@@ -186,16 +219,28 @@ exports.postUpdatePassword = (req, res, next) => {
 
   if (errors) {
     req.flash('errors', errors);
-    return res.redirect('/');
+     console.log(errors);
+     console.log("1");
+   /* return res.redirect('/');*/
   }
 
   User.findById(req.user.id, (err, user) => {
     if (err) { return next(err); }
     user.password = req.body.password;
     user.save((err) => {
+      
       if (err) { return next(err); }
-      req.flash('success', { msg: 'Password has been changed.' });
-      res.redirect('/');
+else
+{
+       res.send({
+             success: true,
+              msg: 'password change Successfully ',
+             
+            });
+}
+
+      /*req.flash('success', { msg: 'Password has been changed.' });
+      res.redirect('/');*/
     });
   });
 };
@@ -315,6 +360,10 @@ exports.postReset = (req, res, next) => {
     res.redirect('/');
   });
 };
+
+
+
+
 
 /**
  * GET /forgot

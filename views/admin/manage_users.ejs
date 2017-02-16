@@ -10,7 +10,7 @@
 		<div class="panel-body">
 			<div class="row">
 				<div class="pull-right">
-					<a href="#" class="btn btn-success margin-inline"  ng-click="open()">Create User</a>
+					<button type="button" class="btn btn-success margin-inline" data-toggle="modal" data-target="#createUserModal">Create User</a>
 				</div>
 			</div>
 			<div>
@@ -50,7 +50,7 @@
 								     <td><%= users[i].userType %></td>
 								     <td>
 								     	
-								     	<button type="button" class="btn btn-danger margin-inline btn-xs btn-del" data-id="<%= users[i].id %>">Delete</button>
+								     	<button type="button" class="btn btn-danger margin-inline btn-xs btn-del" data-id="<%= users[i].id %>" ng-click="deleteUser(<%= JSON.stringify(users[i].id) %>)">Delete</button>
 								     </td>
 								   </tr>
 								<% } %>
@@ -120,14 +120,30 @@
         </button>
         <h5 class="modal-title" id="exampleModalLabel">Create User</h5>
       </div>
-      <form method="post" action="/admin/create_user">
+      <form  ng-submit="createUser()" >
 	      <div class="modal-body">
+	           <div class="form-group row">
+			            <div class="col-md-3">
+			                <label class="form-control-label">Firstname</label>
+			            </div>
+			            <div class="col-md-9">
+			                <input type="text" name="firstname" id="group-edit" class="form-control" placeholder="Firstname" ng-model="user.firstname" required>
+			            </div>
+			        </div>
+	              <div class="form-group row">
+			            <div class="col-md-3">
+			                <label class="form-control-label">Lastname</label>
+			            </div>
+			            <div class="col-md-9">
+			                <input type="text" name="lastname" id="group-edit" class="form-control" placeholder="Lastname" ng-model="user.lastname" required>
+			            </div>
+			        </div>
 		        	<div class="form-group row">
 			            <div class="col-md-3">
 			                <label class="form-control-label">Username</label>
 			            </div>
 			            <div class="col-md-9">
-			                <input type="text" name="username" id="group-edit" class="form-control" placeholder="Username" required>
+			                <input type="text" name="username" id="group-edit" class="form-control" placeholder="Username" ng-model="user.username" required>
 			            </div>
 			        </div>
 			        <div class="form-group row">
@@ -135,7 +151,7 @@
 			                <label class="form-control-label">Password</label>
 			            </div>
 			            <div class="col-md-9">
-			                <input type="text" name="password" id="group-edit" class="form-control" placeholder="Password" required>
+			                <input type="text" name="password" id="group-edit" class="form-control" placeholder="Password" ng-model="user.password" required>
 			            </div>
 			        </div>
 			        <div class="form-group row">
@@ -143,13 +159,13 @@
 			                <label class="form-control-label">User Type</label>
 			            </div>
 			            <div class="col-md-9">
-			               <select name="userType" id="userType" class="form-control" >
-			               		<option>ADMIN</option>
-			               		<option>USER</option>
+			               <select name="userType" id="userType" class="form-control" ng-model="user.userType" ng-change="userSelect()">
+			               		<option value="ADMIN">ADMIN</option>
+			               		<option value="USER">USER</option>
 			               </select>
 			            </div>
 			        </div>
-			        <div class="form-group row form-user-group" style="display: none;">
+			        <div ng-show="usertype.showvalue" class="form-group row form-user-group" >
 			            <div class="col-md-3">
 			                <label class="form-control-label">User Group</label>
 			            </div>
@@ -166,7 +182,7 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="submit" class="btn btn-primary">Save changes</button>
+	        <button type="submit" class="btn btn-primary"  >Save changes</button>
 	      </div>
       </form>
     </div>
@@ -177,7 +193,7 @@
 <!-- Page Scripts -->
 
 <script>
-	var sel_group_id;html/index.html
+	/*var sel_group_id;html/index.html
     $(function(){
 
         $('#example1').DataTable({
@@ -202,13 +218,13 @@
         	} else {
         		$('.form-user-group').show();
         	}
-        })
+        })*/
 /*
         $('.btn-edit').click(function(){
         	sel_group_id = $(this).data('id');
         	var group = $(this).data('group');
         	$('#group-edit').val(group);
         	$('#editGroupModal').modal('show');
-        });*/
-    });
+        });
+    });*/
 </script>

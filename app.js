@@ -11,11 +11,13 @@ const chalk = require('chalk');
 const errorHandler = require('errorhandler');
 const lusca = require('lusca');
 const dotenv = require('dotenv');
+
 const MongoStore = require('connect-mongo')(session);
 const flash = require('express-flash');
 const path = require('path');
 const mongoose = require('mongoose');
 const passport = require('passport');
+
 const expressValidator = require('express-validator');
 const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
@@ -144,6 +146,8 @@ app.get('/user', passportConfig.isAuthenticated, userController.index);
 app.get('/user/update', passportConfig.isAuthenticated, userController.getUpdate);
 app.post('/user/update', passportConfig.isAuthenticated, userController.postUpdate);
 app.get('/user/update_password', passportConfig.isAuthenticated, userController.getUpdatePassword);
+app.post('/user/profile', passportConfig.isAuthenticated, userController.postProfile);
+
 app.post('/user/update_password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 
 app.get('/admin/dashboard', passportConfig.isAuthenticated, adminController.index);
@@ -157,6 +161,7 @@ app.post('/admin/update_group', passportConfig.isAuthenticated, adminController.
 app.get('/admin/delete_group/:id', passportConfig.isAuthenticated, adminController.deleteGroup);
 
 app.get('/admin/update_password', passportConfig.isAuthenticated, adminController.getUpdatePassword);
+app.get('/admin/profile', passportConfig.isAuthenticated, adminController.getprofile);
 
 /**
  * Error Handler.

@@ -1,0 +1,59 @@
+<%- contentFor('body') %>
+<section class="page-content">
+	<section class="panel">
+		<div class="panel-heading">
+	        <h3>
+	           Manage Profile
+	        </h3>
+	    </div>
+		<div class="panel-body">
+			<div>
+				<%if (messages.errors) { %>
+	                <div class="alert alert-danger" role="alert">
+	                	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                		<span aria-hidden="true">×</span>
+	                	</button>
+	                	<%= messages.errors[0].message %>
+	                </div>
+	            <% } %>
+	            <%if (messages.success) { %>
+	                <div class="alert alert-success" role="alert">
+	                	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                		<span aria-hidden="true">×</span>
+	                	</button>
+	                	<%= messages.success[0].message %>
+	                </div>
+	            <% } %>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<form  class="validatedFrm" ng-submit="editProfile($event)">
+					     
+					        <div class="form-group row">
+					            <div class="col-md-3">
+					                <label class="form-control-label">Firstname</label>
+					            </div>
+					            <div class="col-md-9">
+					                <input type="text" name="firstname" id="firstname" class="form-control" ng-model="user.firstname" placeholder="Firstname">
+					            </div>
+					        </div>
+					        <div class="form-group row">
+					            <div class="col-md-3">
+					                <label class="form-control-label">Lastname</label>
+					            </div>
+					            <div class="col-md-9">
+					                <input type="text" name="lastname" class="form-control" placeholder="Lastname" ng-model="user.lastname">
+					            </div>
+					        </div>
+					        <button type="submit" class="btn btn-primary" >Save changes</button>
+					      
+				    </form>
+				</div>
+			</div>
+		</div>
+	</section>
+</section>
+
+<%- contentFor('page_script') %>
+<!-- Page Scripts -->

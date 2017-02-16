@@ -28,6 +28,14 @@ angular.module('cleanUI', [
             templateUrl: '/admin/manage_groups'
         });
 
+        $routeProvider.when('/admin/profile', {
+            templateUrl: '/admin/profile'
+        });
+
+        $routeProvider.when('/admin/update_password', {
+            templateUrl: '/admin/update_password'
+        });
+
         /////////////////////////////////////////////////////////////
         // Apps
         $routeProvider.when('/apps/profile', {
@@ -364,10 +372,11 @@ app.controller('MainCtrl', function($location, $scope, $rootScope, $timeout, $ht
         }, 1000);
         $('body').removeClass('cui-page-loading-state');
     });
-
-    $scope.groupName="ertretre";
+$scope.groupName="";
+    
     $scope.saveGroup=function(e)
     {
+        
         e.preventDefault();
       
         $http.post("/admin/create_group",{group:$scope.groupName}).then(function (result) {
@@ -376,22 +385,15 @@ app.controller('MainCtrl', function($location, $scope, $rootScope, $timeout, $ht
                  $window.location.reload();
                  //$location.path('/admin/manage_groups');
               } else {
-                
+                //empty
               }
         });
-
-    
-
     };
- $scope.deleteGroup=function(id)
    
 
-
-    {
-        console.log(id);
-       
-      
-        $http.get("/admin/delete_group/"+"id:"+id).then(function (result) {
+   $scope.deleteGroup=function(id)
+    {     
+        $http.get("/admin/delete_group/"+id).then(function (result) {
               if (result.data.success) {
                 
                  $window.location.reload();
@@ -399,13 +401,135 @@ app.controller('MainCtrl', function($location, $scope, $rootScope, $timeout, $ht
               } else {
                 
               }
-        });
-       
+        });   
      
-    
 
     };
 
+    $scope.editGroup=function(group)
+    {
+        $scope.groups={};
+        $scope.groups=group;
+        $scope.group={};
+        $scope.group.editId=group.group;
+        console.log( $scope.group.editId);
+       
+
+    }
+     $scope.updateGroup=function(e)
+     {
+        e.preventDefault();
+        //$scope.groups.group=$scope.group;
+        console.log($scope.groups.group);
+         console.log($scope.groups._id);
+        $http.post("/admin/update_group/",$scope.groups).then(function (result) {
+                  if (result.data.success) {
+                    
+                     $window.location.reload();
+                     //$location.path('/admin/manage_groups');
+                  } else {
+                    //empty
+                  }
+            });   
+
+     }
+ $scope.user={};
+
+$scope.usertype={};
+$scope.user.userType="ADMIN";
+$scope.user.firstname="";
+$scope.user.lastname="";
+$scope.user.username="";
+$scope.user.password="";
+$scope.usertype.showvalue=false;
+$scope.userSelect=function()
+{ 
+    if($scope.user.userType=="USER")
+    {         
+        $scope.usertype.showvalue=true;
+    }
+    else
+    {        
+       $scope.usertype.showvalue=false;
+    }
+   
+}
+$scope.editProfile=function(e)
+{
+      e.preventDefault();
+       $http.post("/user/profile",$scope.user).then(function (result) {
+              if (result.data.success) {
+                
+                $location.path("/admin/manage_groups");
+                 //$location.path('/admin/manage_groups');
+              } else {
+                
+              }
+        });   
+
+}
+$scope.profileScreen=function()
+{
+    
+     $location.path("/admin/profile");
+
+}
+
+$scope.createUser=function()
+{
+    console.log($scope.user.username);
+    console.log($scope.user.password);
+    console.log($scope.user.userType);
+     $http.post("/admin/create_user",$scope.user).then(function (result) {
+              if (result.data.success) {
+                
+                 $window.location.reload();
+                 //$location.path('/admin/manage_groups');
+              } else {
+                //empty
+              }
+        });
+
+}
+
+$scope.deleteUser=function(userid)
+{
+
+
+$http.get("/admin/delete_user/"+userid).then(function (result) {
+              if (result.data.success) {
+                
+                 $window.location.reload();
+                 //$location.path('/admin/manage_groups');
+              } else {
+                
+              }
+        });   
+
+}
+$scope.changePasswordScreen=function()
+{
+    $location.path("/admin/update_password");
+}
+$scope.userPass={};
+$scope.userPass.password="";
+$scope.userPass.confirm_password="";
+$scope.changePassword=function(e)
+{
+     e.preventDefault();
+    console.log($scope.userPass.password);
+     console.log($scope.userPass.confirm_password);
+    $http.post("/user/update_password/",$scope.userPass).then(function (result) {
+              if (result.data.success) {
+                
+                $location.path("/admin/manage_groups");
+                 //$location.path('/admin/manage_groups');
+              } else {
+                
+              }
+        });   
+
+}
 
 });
 
