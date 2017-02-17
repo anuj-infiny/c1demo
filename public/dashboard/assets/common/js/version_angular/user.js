@@ -581,6 +581,38 @@ $scope.changePasswordScreen=function()
 }
 $scope.user={};
 $scope.user.email="";
+$scope.userPass={};
+$scope.userPass.password="";
+$scope.userPass.confirm_password="";
+$scope.userPass.invalid=false;
+$scope.changePassword=function(e)
+{
+     e.preventDefault();
+    console.log($scope.userPass.password);
+     console.log($scope.userPass.confirm_password);
+     if($scope.userPass.password!=$scope.userPass.confirm_password)
+     {
+
+
+        return $scope.userPass.invalid=true;
+     }
+     else{
+    $http.post("/user/update_password/",$scope.userPass).then(function (result) {
+              jQuery('#createGroupModal').modal('hide');
+             jQuery('.modal-backdrop').remove();
+              if (result.data.success) {               
+             
+             var currentPageTemplate = $route.current.templateUrl;
+                $templateCache.remove(currentPageTemplate);
+                $route.reload();
+                $location.path("/user/dashboard");
+                 //$location.path('/admin/manage_groups');
+              } else {
+                
+              }
+        });  
+        }
+}
 $scope.changeEmail=function(e)
 {
      e.preventDefault();
