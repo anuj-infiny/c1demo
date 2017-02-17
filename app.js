@@ -125,7 +125,7 @@ app.get('/', passportConfig.isAuthenticated, function(req, res){
     if(req.user.userType == 'ADMIN'){
         return res.redirect('/dashboard/admin/index.html');
     } else{
-        return res.redirect('/user');
+        return res.redirect('/dashboard/user/index.html');
     }
 });
 
@@ -142,12 +142,14 @@ app.post('/account/password', passportConfig.isAuthenticated, userController.pos
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
-app.get('/user', passportConfig.isAuthenticated, userController.index);
+app.get('/user/dashboard', passportConfig.isAuthenticated, userController.index);
 app.get('/user/update', passportConfig.isAuthenticated, userController.getUpdate);
+/*app.get('/user/update', passportConfig.isAuthenticated, userController.getprofile);*/
 app.post('/user/update', passportConfig.isAuthenticated, userController.postUpdate);
 app.get('/user/update_password', passportConfig.isAuthenticated, userController.getUpdatePassword);
 app.post('/user/profile', passportConfig.isAuthenticated, userController.postProfile);
 
+// app.post('/user/getProfile', passportConfig.isAuthenticated, userController.postGetProfile);
 app.post('/user/update_password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 
 app.get('/admin/dashboard', passportConfig.isAuthenticated, adminController.index);
@@ -159,9 +161,9 @@ app.get('/admin/manage_groups', passportConfig.isAuthenticated, adminController.
 app.post('/admin/create_group', passportConfig.isAuthenticated, adminController.createGroup);
 app.post('/admin/update_group', passportConfig.isAuthenticated, adminController.updateGroup);
 app.get('/admin/delete_group/:id', passportConfig.isAuthenticated, adminController.deleteGroup);
-
+app.post('/admin/editProfile', passportConfig.isAuthenticated, adminController.postEditProfile);
 app.get('/admin/update_password', passportConfig.isAuthenticated, adminController.getUpdatePassword);
-app.get('/admin/profile', passportConfig.isAuthenticated, adminController.getprofile);
+app.get('/admin/update', passportConfig.isAuthenticated, adminController.getprofile);
 
 /**
  * Error Handler.

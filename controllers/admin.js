@@ -15,6 +15,34 @@ exports.manageUsers = (req, res) => {
 	});
 };
 
+exports.postEditProfile = (req, res) => {
+	console.log(req.body.userType);
+	console.log(req.body.userGroup);
+    console.log(req.body._id);
+	User.findOne({_id: req.body._id}, (error, user) => {
+		console.log(error);
+	    if (error) { return done(error); }
+	    else {
+	    	console.log(user);
+	    	user.userType=req.body.userType;
+	    	user.userGroup=req.body.userGroup;
+	    	user.username=req.body.username;
+	    user.save((err) => {    
+	    console.log(err);  
+          if (err) { return next(err); }
+           else
+            {
+	           res.send({
+		             success: true,
+		              msg: 'updated successfully',
+		              data:user
+	                });
+            }
+	    	
+	    });
+	   }
+	});
+};
 exports.createUser = (req, res) => {
 	User.findOne({username: req.body.username}, (err, user) => {
 	    if (err) { return done(err); }
@@ -32,10 +60,8 @@ exports.createUser = (req, res) => {
 	    	console.log(req.body.username);
 	    	console.log(req.body.password);
 	    	console.log(req.body.userType);
-	    	var profile={};
-	    	profile.firstname=req.body.firstname;
-	    	profile.lastname=req.body.lastname;
-	    	User.create({username: req.body.username, password: req.body.password, userType: req.body.userType,profile: profile}, function (err, user) {
+	    	
+	    	User.create({username: req.body.username, password: req.body.password, userType: req.body.userType,userGroup:req.body.userGroup}, function (err, user) {
 			  console.log(err);
 			  if (err) return handleError(err);
 			  else

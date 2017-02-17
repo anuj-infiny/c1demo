@@ -10,7 +10,7 @@
 		<div class="panel-body">
 			<div class="row">
 				<div class="pull-right">
-					<button type="button" class="btn btn-success margin-inline" data-toggle="modal" data-target="#createUserModal">Create User</a>
+					<button type="button" class="btn btn-success margin-inline" data-toggle="modal" data-target="#createUserModal" ng-click="createUserScreen()">Create User</a>
 				</div>
 			</div>
 			<div>
@@ -34,7 +34,7 @@
 
 			<div class="row">
 				<div class="col-md-12">
-					<table class="table table-hover nowrap" id="example1" width="100%">
+					<table class="table table-hover nowrap row-border hover" id="example1" datatable="ng">
 						<thead>
 		                    <tr>
 								<th>User</th>
@@ -49,8 +49,9 @@
 								     <td><%= users[i].username %></td>
 								     <td><%= users[i].userType %></td>
 								     <td>
-								     	
-								     	<button type="button" class="btn btn-danger margin-inline btn-xs btn-del" data-id="<%= users[i].id %>" ng-click="deleteUser(<%= JSON.stringify(users[i].id) %>)">Delete</button>
+								     	<button type="button" class="btn btn-success margin-inline btn-xs btn-edit" data-id="<%= users[i].id %>" ng-click="editUser(<%= JSON.stringify(users[i]) %>)" data-toggle="modal" data-target="#editUserModal" >Edit</button>
+								     	<button type="button" class="btn btn-danger margin-inline btn-xs btn-del" data-id="<%= users[i].id %>" data-toggle="modal" data-target="#deleteGroupModal"
+								     	ng-click="editUser(<%= JSON.stringify(users[i]) %>)">Delete</button>
 								     </td>
 								   </tr>
 								<% } %>
@@ -72,22 +73,14 @@
         </button>
         <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
       </div>
-      <form method="post" action="/admin/create_user">
+      <form  ng-submit="editprofile($event)">
 	      <div class="modal-body">
-		        	<div class="form-group row">
+		        	<div class="form-group row" >
 			            <div class="col-md-3">
 			                <label class="form-control-label">Username</label>
 			            </div>
 			            <div class="col-md-9">
-			                <input type="text" name="username" id="user-edit" class="form-control" placeholder="Username" required>
-			            </div>
-			        </div>
-			        <div class="form-group row">
-			            <div class="col-md-3">
-			                <label class="form-control-label">Password</label>
-			            </div>
-			            <div class="col-md-9">
-			                <input type="text" name="password" id="password-edit" class="form-control" placeholder="Password" required>
+			                <input type="text" name="username" id="user-edit" class="form-control" placeholder="Username" ng-model="user.username" required>			                
 			            </div>
 			        </div>
 			        <div class="form-group row">
@@ -95,57 +88,7 @@
 			                <label class="form-control-label">User Type</label>
 			            </div>
 			            <div class="col-md-9">
-			               <select name="userType" class="form-control">
-			               		<option>ADMIN</option>
-			               		<option>USER</option>
-			               </select>
-			            </div>
-			        </div>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="submit" class="btn btn-primary">Save changes</button>
-	      </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<div  class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h5 class="modal-title" id="exampleModalLabel">Create User</h5>
-      </div>
-      <form  ng-submit="createUser()" >
-	      <div class="modal-body">
-	           <div class="form-group row">
-			        
-		        	<div class="form-group row">
-			            <div class="col-md-3">
-			                <label class="form-control-label">Username</label>
-			            </div>
-			            <div class="col-md-9">
-			                <input type="text" name="username" id="group-edit" class="form-control" placeholder="Username" ng-model="user.username" required>
-			            </div>
-			        </div>
-			        <div class="form-group row">
-			            <div class="col-md-3">
-			                <label class="form-control-label">Password</label>
-			            </div>
-			            <div class="col-md-9">
-			                <input type="text" name="password" id="group-edit" class="form-control" placeholder="Password" ng-model="user.password" required>
-			            </div>
-			        </div>
-			        <div class="form-group row">
-			            <div class="col-md-3">
-			                <label class="form-control-label">User Type</label>
-			            </div>
-			            <div class="col-md-9">
-			               <select name="userType" id="userType" class="form-control" ng-model="user.userType" ng-change="userSelect()">
+			                <select name="userType" id="userType" class="form-control" ng-model="user.userType" ng-change="userSelect()">
 			               		<option value="ADMIN">ADMIN</option>
 			               		<option value="USER">USER</option>
 			               </select>
@@ -168,6 +111,93 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="submit" class="btn btn-primary">Save changes</button>
+	      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade modal-size-large" id="deleteGroupModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal"ng-click="deleteUser($event)"  data-dismiss="modal">Save changes</button>
+                            </div>
+                          </div>
+                         </div>
+                              </div>
+
+<div  class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title" id="exampleModalLabel">Create User</h5>
+      </div>
+      <form  ng-submit="createUser()" name="userForm" >
+	      <div class="modal-body">
+	           <div class="form-group row">
+			        
+		        	<div class="form-group row">
+			            <div class="col-md-3">
+			                <label class="form-control-label">Username</label>
+			            </div>
+			            <div class="col-md-9">
+			                <input type="text" name="username" id="group-edit" class="form-control" placeholder="Username" ng-model="user.username"  required>
+			                <p style="color:red" class="myError" ng-if="userForm.username.$error.empty">Your name is required.</p>
+			            </div>
+			        </div>
+			        <div class="form-group row">
+			            <div class="col-md-3">
+			                <label class="form-control-label">Password</label>
+			            </div>
+			            <div class="col-md-9">
+			                <input type="text" name="password" id="group-edit" class="form-control" placeholder="Password" ng-model="user.password"  ng-minlength="4" ng-maxlength="50"  required>
+			                <p class="myError" style="color:red" ng-if="userForm.password.$error.empty">password is required.</p>
+			                            <p class="myError" style="color:red" ng-show="userForm.password.$error.minlength" class="help-block">password is too short.</p>
+           						 <p class="myError" style="color:red" ng-show="userForm.password.$error.maxlength" class="help-block">password is too long.</p>
+			            </div>
+			        </div>
+			        <div class="form-group row">
+			            <div class="col-md-3">
+			                <label class="form-control-label">User Type</label>
+			            </div>
+			            <div class="col-md-9">
+			               <select name="userType" id="userType" class="form-control" ng-model="user.userType" ng-change="userSelect()">
+			               		<option value="ADMIN">ADMIN</option>
+			               		<option value="USER">USER</option>
+			               </select>
+			            </div>
+			        </div>
+			        <div ng-show="usertype.showvalue" class="form-group row form-user-group" >
+			            <div class="col-md-3">
+			                <label class="form-control-label">User Group</label>
+			            </div>
+			            <div class="col-md-9">
+			               <select  name="userGroup" ng-model="user.userGroup" class="form-control" >
+			               		<% if(typeof groups != 'undefined'){ %>
+									<% for(var i=0; i < groups.length; i++) { %>
+										<option><%= groups[i].group %></option>
+									<% } %>
+								<% } %>
+			               </select>
+			            </div>
+			        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 	        <button type="submit" class="btn btn-primary"  >Save changes</button>
 	      </div>
       </form>
@@ -179,6 +209,11 @@
 <!-- Page Scripts -->
 
 <script>
+jQuery(function(){
+        jQuery('#example1').DataTable({
+            responsive: true
+        });
+     });
 	/*var sel_group_id;html/index.html
     $(function(){
 

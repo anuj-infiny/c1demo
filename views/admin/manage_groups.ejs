@@ -47,8 +47,8 @@
 								   <tr>
 								     <td><%= groups[i].group %></td>
 								     <td>
-								     	<button type="button" class="btn btn-success margin-inline btn-xs btn-edit" data-id="<%= groups[i].id %>" data-group="<%= groups[i].group %>" data-toggle="modal" data-target="#editGroupModal" ng-click="editGroup(<%= JSON.stringify(groups[i]) %>)">Edit</button>
-								     	<button type="button" class="btn btn-danger margin-inline btn-xs btn-del" data-id="<%= groups[i].id %>" ng-click="deleteGroup(<%= JSON.stringify(groups[i].id) %>)">Delete</button>
+								     	<button type="button" class="btn btn-success margin-inline btn-xs btn-edit" data-id="<%= groups[i].id %>" data-group="<%= groups[i].group %>" data-toggle="modal" data-target="#editGroupModal" ng-click="modalGroup(<%= JSON.stringify(groups[i]) %>)">Edit</button>
+								     	<button type="button" class="btn btn-danger margin-inline btn-xs btn-del" data-id="<%= groups[i].id %>" data-toggle="modal" data-target="#deleteGroupModal" ng-click="modalGroup(<%= JSON.stringify(groups[i]) %>)">Delete</button>
 								     </td>
 								   </tr>
 								<% } %>
@@ -70,7 +70,7 @@
         </button>
         <h5 class="modal-title" id="exampleModalLabel">Edit Group</h5>
       </div>
-      <form method="post" action="/admin/update_group">
+      <form >
 	      <div class="modal-body">
 		        	<div class="form-group row">
 			            <div class="col-md-3">
@@ -90,6 +90,26 @@
     </div>
   </div>
 </div>
+<div class="modal fade modal-size-large" id="deleteGroupModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal"ng-click="deleteGroup($event)"  data-dismiss="modal">Save changes</button>
+                            </div>
+                            </div>
+                             </div>
+                              </div>
+
 
 <div class="modal fade" id="createGroupModal" tabindex="-1" ng-controller="MainCtrl" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -100,7 +120,7 @@
         </button>
         <h5 class="modal-title" id="exampleModalLabel">Create Group</h5>
       </div>
-      <form method="post" ng-submit="saveGroup($event)" action="/admin/create_group">
+      <form  >
 	      <div class="modal-body">
 		        	<div class="form-group row">
 			            <div class="col-md-3">
@@ -113,7 +133,7 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="submit" class="btn btn-primary">Save changes</button>
+	        <button type="submit" class="btn btn-primary"  ng-click="saveGroup($event)" data-dismiss="modal">Save changes</button>
 	      </div>
       </form>
     </div>
@@ -124,6 +144,12 @@
 <!-- Page Scripts -->
 
 <script>
+	 jQuery(function(){
+
+        jQuery('#example1').DataTable({
+            responsive: true
+        });
+     });
 	/*var sel_group_id;
     $(function(){
 

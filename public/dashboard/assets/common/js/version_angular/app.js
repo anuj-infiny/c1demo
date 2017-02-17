@@ -331,7 +331,7 @@ angular.module('cleanUI', [
 var app = angular.module('cleanUI.controllers', []);
 
 
-app.controller('MainCtrl', function($location, $scope, $rootScope, $timeout, $http, $window ) {
+app.controller('MainCtrl', function($location, $scope, $rootScope, $timeout, $http, $window, $templateCache, $route ) {
 
     NProgress.configure({
         minimum: 0.2,
@@ -376,27 +376,46 @@ $scope.groupName="";
     
     $scope.saveGroup=function(e)
     {
-        
+        alert("fff");
         e.preventDefault();
-      
+                  jQuery('.modal-backdrop').remove();
+                    jQuery('body').removeClass('modal-open');
+                    if($scope.groupName.length<=0)
+                    {
+                        return;
+
+                    }
+
+         else{
         $http.post("/admin/create_group",{group:$scope.groupName}).then(function (result) {
+
               if (result.data.success) {
-                
-                 $window.location.reload();
+                 var currentPageTemplate = $route.current.templateUrl;
+                $templateCache.remove(currentPageTemplate);
+                $route.reload();
+                 //$window.location.reload();
                  //$location.path('/admin/manage_groups');
               } else {
                 //empty
               }
         });
+    }
     };
+
    
 
    $scope.deleteGroup=function(id)
     {     
-        $http.get("/admin/delete_group/"+id).then(function (result) {
-              if (result.data.success) {
-                
-                 $window.location.reload();
+        id.preventDefault();
+        console.log($scope.groups._id);
+        $http.get("/admin/delete_group/"+$scope.groups._id).then(function (result) {
+               jQuery('#createGroupModal').modal('hide');
+                jQuery('.modal-backdrop').remove();
+              if (result.data.success) {              
+                var currentPageTemplate = $route.current.templateUrl;
+                $templateCache.remove(currentPageTemplate);
+                $route.reload();
+            
                  //$location.path('/admin/manage_groups');
               } else {
                 
@@ -405,9 +424,10 @@ $scope.groupName="";
      
 
     };
-
-    $scope.editGroup=function(group)
+  
+    $scope.modalGroup=function(group)
     {
+
         $scope.groups={};
         $scope.groups=group;
         $scope.group={};
@@ -419,18 +439,31 @@ $scope.groupName="";
      $scope.updateGroup=function(e)
      {
         e.preventDefault();
+        jQuery('.modal-backdrop').remove();
+                    jQuery('body').removeClass('modal-open');
         //$scope.groups.group=$scope.group;
         console.log($scope.groups.group);
          console.log($scope.groups._id);
+         if($scope.groups.group.length<0)
+         {
+            return;
+         }
+         else
+         {
+                   
         $http.post("/admin/update_group/",$scope.groups).then(function (result) {
-                  if (result.data.success) {
                     
-                     $window.location.reload();
-                     //$location.path('/admin/manage_groups');
+                  if (result.data.success) {
+             var currentPageTemplate = $route.current.templateUrl;
+                $templateCache.remove(currentPageTemplate);
+                $route.reload();
+
+                     // $location.path('/admin/manage_groups');
                   } else {
                     //empty
                   }
-            });   
+            });
+            }   
 
      }
  $scope.user={};
@@ -438,6 +471,7 @@ $scope.groupName="";
 $scope.usertype={};
 $scope.user.userType="ADMIN";
 $scope.user.userGroup="";
+$scope.user._id="";
 $scope.user.username="";
 $scope.user.password="";
 $scope.usertype.showvalue=false;
@@ -453,13 +487,34 @@ $scope.userSelect=function()
     }
    
 }
-$scope.editProfile=function(e)
+$scope.checkUser=function()
 {
+    if($scope.user.usertype=="USER")
+    {
+        return true;
+    }
+    else
+        {
+            return ;
+        }
+}
+
+
+$scope.edituserProfile=function(e)
+{
+    alert("edituserProfile");
       e.preventDefault();
+        jQuery('#createGroupModal').modal('hide');
+        jQuery('.modal-backdrop').remove();
        $http.post("/user/profile",$scope.user).then(function (result) {
               if (result.data.success) {
-                
-                $location.path("/admin/manage_groups");
+                 /*$window.location.reload();*/
+               
+             var currentPageTemplate = $route.current.templateUrl;
+                $templateCache.remove(currentPageTemplate);
+                $route.reload();
+
+               $location.path("/admin/manage_groups");
                  //$location.path('/admin/manage_groups');
               } else {
                 
@@ -467,28 +522,47 @@ $scope.editProfile=function(e)
         });   
 
 }
-   $scope.profileInit=function()
-   {
-    
-   }
-
-
-$scope.profileScreen=function()
+$scope.createUserScreen=function()
 {
-     $location.path("/admin/profile");
-    /*$http.post("/user/getProfile").then(function (result) {
+$scope.user.userType="ADMIN";
+$scope.user.userGroup="Select";
+$scope.user._id="";
+$scope.user.username="";
+$scope.user.password="";
+
+}
+
+$scope.editprofile=function(e)
+{
+    $scope.usertype.showvalue=false;
+   console.log($scope.user.userType);
+   console.log($scope.user);
+ 
+      e.preventDefault();
+         jQuery('#editUserModal').modal('hide');
+        jQuery('.modal-backdrop').remove();
+       $http.post("/admin/editProfile",$scope.user).then(function (result) {
               if (result.data.success) {
-                console.log("success");
-                 $scope.user=result.data.data;
-                 console.log(result.data.data);
-                
+                var currentPageTemplate = $route.current.templateUrl;
+                $templateCache.remove(currentPageTemplate);
+                $route.reload();
+                $location.path("/admin/manage_users");
                  //$location.path('/admin/manage_groups');
               } else {
                 
               }
-        });   */
-    
-    
+        });   
+
+}
+
+$scope.profileScreen=function()
+{
+           jQuery('#createGroupModal').modal('hide');
+             jQuery('.modal-backdrop').remove();
+             var currentPageTemplate = $route.current.templateUrl;
+                $templateCache.remove(currentPageTemplate);
+                $route.reload();
+          $location.path("/admin/profile");    
 }
 
 $scope.createUser=function()
@@ -496,55 +570,108 @@ $scope.createUser=function()
     console.log($scope.user.username);
     console.log($scope.user.password);
     console.log($scope.user.userType);
+    if($scope.user.password.length<4)
+    {
+
+        return;
+    }
+    else
+{
+    jQuery('#createGroupModal').modal('hide');
+             jQuery('.modal-backdrop').remove();
      $http.post("/admin/create_user",$scope.user).then(function (result) {
-              if (result.data.success) {
-                
-                 $window.location.reload();
+             
+              if (result.data.success) {                 
+             var currentPageTemplate = $route.current.templateUrl;
+                $templateCache.remove(currentPageTemplate);
+                $route.reload();
+
+              /*   $window.location.reload();*/
                  //$location.path('/admin/manage_groups');
               } else {
                 //empty
               }
         });
+ }    
 
 }
+$scope.dataResult={};
+$scope.dataResult.success;
+$scope.dataResult.msg=""; 
 
-$scope.deleteUser=function(userid)
-{
 
-
-$http.get("/admin/delete_user/"+userid).then(function (result) {
-              if (result.data.success) {
-                
-                 $window.location.reload();
-                 //$location.path('/admin/manage_groups');
-              } else {
-                
-              }
-        });   
-
-}
 $scope.changePasswordScreen=function()
 {
     $location.path("/admin/update_password");
 }
+
 $scope.userPass={};
 $scope.userPass.password="";
 $scope.userPass.confirm_password="";
+$scope.userPass.invalid=false;
 $scope.changePassword=function(e)
 {
      e.preventDefault();
     console.log($scope.userPass.password);
      console.log($scope.userPass.confirm_password);
+     if($scope.userPass.password!=$scope.userPass.confirm_password)
+     {
+
+
+        return $scope.userPass.invalid=true;
+     }
+     else{
     $http.post("/user/update_password/",$scope.userPass).then(function (result) {
-              if (result.data.success) {
-                
+              jQuery('#createGroupModal').modal('hide');
+             jQuery('.modal-backdrop').remove();
+              if (result.data.success) {               
+             
+             var currentPageTemplate = $route.current.templateUrl;
+                $templateCache.remove(currentPageTemplate);
+                $route.reload();
                 $location.path("/admin/manage_groups");
                  //$location.path('/admin/manage_groups');
               } else {
                 
               }
-        });   
+        });  
+        }
+}
 
+$scope.editUser=function(user)
+   {
+ console.log(user);
+$scope.user._id=user._id;
+ $scope.user=user;
+   
+   }
+   $scope.deleteUser=function(e)
+    {
+        e.preventDefault();
+        console.log($scope.user._id);
+        $http.get("/admin/delete_user/"+$scope.user._id).then(function (result) {
+        jQuery('#createGroupModal').modal('hide');
+        jQuery('.modal-backdrop').remove();
+              if (result.data.success) {               
+              $scope.dataResult.success=result.data.success;
+              $scope.dataResult.msg=result.data.msg;
+
+             var currentPageTemplate = $route.current.templateUrl;
+                $templateCache.remove(currentPageTemplate);
+                $route.reload();
+
+
+
+
+
+          /*  /*     $window.location.reload();
+                 //$location.path('/admin/manage_groups');
+              } else {
+                
+              }*/
+        }   
+
+});
 }
 
 });

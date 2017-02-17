@@ -12,19 +12,22 @@ var Promise = require("bluebird");
  * Login page.
  */
 exports.index = (req, res) => {
-  res.render('user/dashboard');
+  res.render('user/dashboard',{layout: 'base'});
 };
 
 exports.getUpdate = (req, res) => {
   console.log(req.user);
-  res.render('user/update', {email : req.user.email });
+  res.render('user/update', {email : req.user.email,layout: 'base' });
 };
 
 exports.postUpdate = (req, res) => {
   User.findOneAndUpdate({ _id: req.user._id }, { email : req.body.email }, {upsert:false}, function(err, user){
       req.user.email = req.body.email;
-      req.flash('success', {message: "Email updated"});
-      return res.redirect('/user/update');
+       res.send({
+         success: true,
+          msg: 'updated successfully',
+          data:user
+        });
   });
 };
 
@@ -179,12 +182,12 @@ exports.postUpdateProfile = (req, res, next) => {
 
 
 exports.postProfile = (req, res, next) => {
-  console.log(req.body.firstname);
-  console.log(req.body.lastname);
+
   User.findById(req.user.id, (err, user) => {
     if (err) { return next(err); }
-    user.profile.firstname = req.body.firstname;
-    user.profile.lastname=req.body.lastname;
+   user.username=req.body.username;
+   user.password=req.body.password
+   user.userType=req.body.userType;
     user.save((err) => {
       
    if (err) { return next(err); }
@@ -202,6 +205,23 @@ exports.postProfile = (req, res, next) => {
     });
   });
 };
+
+/*exports.postGetProfile = (req, res, next) => {
+  console.log(req.user.id);
+  User.findById(req.user.id, (err, user) => {
+   console.log(err);
+    if (err) { return next(err); }
+    else
+    {
+         console.log(user);
+        res.send({
+               success: true,
+              msg: 'profile updated Successfully ',
+             data:user
+            });    
+         }
+  });
+};*/
 
 
 
@@ -229,15 +249,15 @@ exports.postUpdatePassword = (req, res, next) => {
     user.password = req.body.password;
     user.save((err) => {
       
-      if (err) { return next(err); }
-else
-{
+     if (err) { return next(err); }
+     else
+     {
        res.send({
              success: true,
               msg: 'password change Successfully ',
              
             });
-}
+      }
 
       /*req.flash('success', { msg: 'Password has been changed.' });
       res.redirect('/');*/
@@ -441,3 +461,8 @@ exports.postForgot = (req, res, next) => {
     res.redirect('/forgot');
   });
 };
+/*exports.getprofile = (req, res) => {
+        console.log("in user ");
+  res.render('user/update', { layout: 'base' });
+};
+*/

@@ -1,6 +1,4 @@
 <%- contentFor('body') %>
-<%- include partials/left_nav.ejs %>
-<%- include partials/top_nav.ejs %>
 <section class="page-content">
 	<section class="panel">
 		<div class="panel-heading">
@@ -10,7 +8,8 @@
 	    </div>
 		<div class="panel-body">
 			<div>
-				<%if (messages.errors) { %>
+				
+	               <%if (messages.errors) { %>
 	                <div class="alert alert-danger" role="alert">
 	                	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	                		<span aria-hidden="true">×</span>
@@ -26,18 +25,19 @@
 	                	<%= messages.success[0].message %>
 	                </div>
 	            <% } %>
+	           
 			</div>
 
 			<div class="row">
 				<div class="col-md-12">
-					<form method="post" action="/user/update">
+					<form method="post" ng-submit="changeEmail($event)">
 					     
 				        	<div class="form-group row">
 					            <div class="col-md-3">
 					                <label class="form-control-label">Email</label>
 					            </div>
 					            <div class="col-md-9">
-					                <input type="email" name="email" id="group-edit" class="form-control" placeholder="Email" value="<%= email %>" required>
+					                <input type="email" name="email" id="group-edit" class="form-control" placeholder="Email" ng-model="user.email" value="<%= email %>" required>
 					            </div>
 					        </div>
 					        <button type="submit" class="btn btn-primary">Save changes</button>
