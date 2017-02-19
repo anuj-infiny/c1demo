@@ -28,6 +28,10 @@ angular.module('cleanUI', [
             templateUrl: '/user/update'
         });
 
+        $routeProvider.when('/user/Details', {
+            templateUrl: '/user/Details'
+        });
+
         $routeProvider.when('/admin/profile', {
             templateUrl: '/admin/profile'
         });
@@ -450,6 +454,7 @@ $scope.groupName="";
  $scope.user={};
 
 $scope.usertype={};
+$scope.usertype.page="";
 $scope.user.userType="ADMIN";
 $scope.user.userGroup="";
 $scope.user._id="";
@@ -468,9 +473,30 @@ $scope.userSelect=function()
     }
    
 }
-$scope.login=function()
+$scope.detailsScreen=function(page)
 {
+    console.log(page);
+    if(page=="offline")
+    {
+        $scope.usertype.page="OFFLINE DETAILS"
 
+    }
+    else if(page=="underreview")
+    {
+        $scope.usertype.page="UNDER REVIEW DETAILS"
+
+    }
+    else if(page=="online")
+    {
+        $scope.usertype.page="ONLINE DETAILS"
+
+    }
+      else if(page=="total")
+    {
+        $scope.usertype.page="TOTAL DETAILS"
+
+    }
+    $location.path("/user/Details");
 
 }
 

@@ -18,7 +18,7 @@ exports.manageUsers = (req, res) => {
 exports.postEditProfile = (req, res) => {
 	console.log(req.body.userType);
 	console.log(req.body.userGroup);
-    console.log(req.body._id);
+   
 	User.findOne({_id: req.body._id}, (error, user) => {
 		console.log(error);
 	    if (error) { return done(error); }
@@ -27,6 +27,18 @@ exports.postEditProfile = (req, res) => {
 	    	user.userType=req.body.userType;
 	    	user.userGroup=req.body.userGroup;
 	    	user.username=req.body.username;
+	    	 console.log(req.body.password);
+	    	if(req.body.password=="" || req.body.password.lenght>0)
+	    	{
+	    		console.log("req.body.password do nothing ");
+	    	 }
+	    	 else
+	    	 {
+	    	 	console.log("req.body.password do something ");
+
+	    	 	user.password=req.body.password;
+	    	 }		
+
 	    user.save((err) => {    
 	    console.log(err);  
           if (err) { return next(err); }

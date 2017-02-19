@@ -372,29 +372,27 @@ app.controller('MainCtrl', function($location, $scope, $rootScope, $timeout, $ht
         }, 1000);
         $('body').removeClass('cui-page-loading-state');
     });
-$scope.groupName="";
-    
+    $scope.groupName="";    
     $scope.saveGroup=function(e)
-    {
-   
-        e.preventDefault();
+    {  
+                 e.preventDefault();
+                  jQuery('#createGroupModal').modal('toggle');
                   jQuery('.modal-backdrop').remove();
-                    jQuery('body').removeClass('modal-open');
+                   
                     if($scope.groupName.length<=0)
                     {
-                        return;
-
+                     return;
                     }
 
          else{
-        $http.post("/admin/create_group",{group:$scope.groupName}).then(function (result) {
+                $http.post("/admin/create_group",{group:$scope.groupName}).then(function (result) {
 
-              if (result.data.success) {
-                 var currentPageTemplate = $route.current.templateUrl;
-                $templateCache.remove(currentPageTemplate);
-                $route.reload();
-                 //$window.location.reload();
-                 //$location.path('/admin/manage_groups');
+                      if (result.data.success) {
+                         var currentPageTemplate = $route.current.templateUrl;
+                        $templateCache.remove(currentPageTemplate);
+                        $route.reload();
+                         //$window.location.reload();
+                         //$location.path('/admin/manage_groups');
               } else {
                 //empty
               }
@@ -438,10 +436,10 @@ $scope.groupName="";
     }
      $scope.updateGroup=function(e)
      {
-        
         e.preventDefault();
+         jQuery('#editGroupModal').modal('toggle');
         jQuery('.modal-backdrop').remove();
-                    jQuery('body').removeClass('modal-open');
+                   
         //$scope.groups.group=$scope.group;
         console.log($scope.groups.group);
          console.log($scope.groups._id);
@@ -505,7 +503,7 @@ $scope.edituserProfile=function(e)
 {
 
       e.preventDefault();
-        jQuery('#createGroupModal').modal('hide');
+        jQuery('#createGroupModal').modal('toggle');
         jQuery('.modal-backdrop').remove();
        $http.post("/user/profile",$scope.user).then(function (result) {
               if (result.data.success) {
@@ -534,19 +532,22 @@ $scope.user.password="";
 }
 
 $scope.userTemp={};
-$scope.userTemp.password="";
+
+
 $scope.editprofile=function(e)
 {
-    $scope.userTemp.password="";
+    
 $scope.usertype.showvalue=false;
 console.log($scope.user.userType);
 console.log($scope.userTemp.password);
-   if($scope.userTemp.password=="")
+   if($scope.userTemp.password=="" || $scope.userTemp.password==undefined)
    {
 
    }
    else if($scope.userTemp.password.length<4)
    {
+    $scope.userTemp.password="";
+
         console.log("in true edit");
         return  $scope.userPass.editInvalid=true; 
    }
@@ -557,7 +558,7 @@ console.log($scope.userTemp.password);
  
 e.preventDefault();
 
- jQuery('#editUserModal').modal('hide');
+ jQuery('#editUserModal').modal('toggle');
 jQuery('.modal-backdrop').remove();
 $http.post("/admin/editProfile",$scope.user).then(function (result) {
       if (result.data.success) {
@@ -575,7 +576,7 @@ $http.post("/admin/editProfile",$scope.user).then(function (result) {
 
 $scope.profileScreen=function()
 {
-           jQuery('#createGroupModal').modal('hide');
+            jQuery('#createGroupModal').modal('toggle');  
              jQuery('.modal-backdrop').remove();
              var currentPageTemplate = $route.current.templateUrl;
                 $templateCache.remove(currentPageTemplate);
@@ -595,7 +596,8 @@ $scope.createUser=function()
     }
     else
 {
-    jQuery('#createGroupModal').modal('hide');
+    jQuery('#createGroupModal').modal('toggle');
+
              jQuery('.modal-backdrop').remove();
      $http.post("/admin/create_user",$scope.user).then(function (result) {
              
@@ -627,6 +629,8 @@ $scope.userPass={};
 $scope.userPass.password="";
 $scope.userPass.confirm_password="";
 $scope.userPass.invalid=false;
+
+
 $scope.changePassword=function(e)
 {
      e.preventDefault();
@@ -640,7 +644,7 @@ $scope.changePassword=function(e)
      }
      else{
     $http.post("/user/update_password/",$scope.userPass).then(function (result) {
-              jQuery('#createGroupModal').modal('hide');
+              jQuery('#createGroupModal').modal('toggle');
              jQuery('.modal-backdrop').remove();
               if (result.data.success) {               
              
@@ -668,7 +672,7 @@ $scope.user._id=user._id;
         e.preventDefault();
         console.log($scope.user._id);
         $http.get("/admin/delete_user/"+$scope.user._id).then(function (result) {
-        jQuery('#createGroupModal').modal('hide');
+        jQuery('#createGroupModal').modal('toggle');
         jQuery('.modal-backdrop').remove();
               if (result.data.success) {               
               $scope.dataResult.success=result.data.success;

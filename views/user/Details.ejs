@@ -1,0 +1,70 @@
+<%- contentFor('body') %>
+
+<section class="page-content">
+	<section class="panel">
+		<div class="panel-heading">
+	        <h3>
+	     Details 
+	        </h3>
+	    </div>
+		
+			<div>
+				<%if (messages.errors) { %>
+	                <div class="alert alert-danger" role="alert">
+	                	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                		<span aria-hidden="true">×</span>
+	                	</button>
+	                	<%= messages.errors[0].message %>
+	                </div>
+	            <% } %>
+	            <%if (messages.success) { %>
+	                <div class="alert alert-success" role="alert">
+	                	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                		<span aria-hidden="true">×</span>
+	                	</button>
+	                	<%= messages.success[0].message %>
+	                </div>
+	            <% } %>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<table class="table table-hover nowrap row-border hover" id="example1" datatable="ng">
+						<thead>
+		                    <tr>
+								<th>UniqueID</th>
+								<th>CustomerName</th>
+								<th>GreenStatus</th>
+								<th>YellowStatus</th>
+								<th>RedStatus</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<% if(typeof values != 'undefined'){ %>
+								<% for(var i=0; i < values.length; i++) { %>
+								   <tr>
+								     <td><%= values[i].UniqueID %></td>
+								     <td><%= values[i].CustomerName %></td>
+								      <td><%= values[i].GreenStatus %></td>
+								       <td><%= values[i].YellowStatus %></td>
+								        <td><%= values[i].RedStatus %></td>
+								   </tr>
+								<% } %>
+							<% } %>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+</section>
+<%- contentFor('page_script') %>
+<!-- Page Scripts -->
+<script>
+jQuery(function(){
+        jQuery('#example1').DataTable({
+            responsive: true
+        });
+     });
+</script>

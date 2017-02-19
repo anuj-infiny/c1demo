@@ -1,32 +1,89 @@
 <%- contentFor('body') %>
 <section class="page-content">
-	<section class="panel">
-		<div class="panel-heading">
-	        <h3>
-	           Dashboard
-	        </h3>
-	    </div>
-		<div class="panel-body">
-			<div>
-				<%if (messages.errors) { %>
-	                <div class="alert alert-danger" role="alert">
-	                	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	                		<span aria-hidden="true">×</span>
-	                	</button>
-	                	<%= messages.errors[0].messages || messages.errors[0].msg %>
-	                </div>
-	            <% } %>
-	            <%if (messages.success) { %>
-	                <div class="alert alert-success" role="alert">
-	                	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	                		<span aria-hidden="true">×</span>
-	                	</button>
-	                	<%= messages.success[0].messages || messages.success[0].msg %>
-	                </div>
-	            <% } %>
-			</div>
-		</div>
-	</section>
+    <section class="panel">
+        <div class="panel-heading">
+            <h3>
+               Dashboard
+            </h3>
+        </div>
+        
+        <div class="panel-body">
+            <div>
+                <%if (messages.errors) { %>
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <%= messages.errors[0].messages || messages.errors[0].msg %>
+                    </div>
+                <% } %>
+                <%if (messages.success) { %>
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <%= messages.success[0].messages || messages.success[0].msg %>
+                    </div>
+                <% } %>
+            </div>
+            <div class="row">
+                    <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12" ng-click="detailsScreen('offline')">
+                        <div class="widget widget-seven background-success">
+                            <div class="widget-body">
+                                <div href="javascript: void(0);" class="widget-body-inner">
+                                    <h5 class="text-uppercase">Offline</h5>
+                                    <i class="counter-icon icmn-folder-check"></i>
+                                    <span class="counter-count">                                     
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12"  ng-click="detailsScreen('underreview')">
+                        <div class="widget widget-seven" style="background-color:#c5c84b">
+                            <div class="widget-body">
+                                <div href="javascript: void(0);" class="widget-body-inner" >
+                                    <h5 class="text-uppercase">Under Review</h5>
+                                    <i class="counter-icon icmn-folder-search"></i>
+                                    <span class="counter-count">
+                                    
+                                       
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12"  ng-click="detailsScreen('Online')">
+                        <div class="widget widget-seven" style="background-color:red">
+                            <div class="widget-body">
+                                <div href="javascript: void(0);" class="widget-body-inner">
+                                    <h5 class="text-uppercase">Online</h5>
+                                    <i class="counter-icon icmn-folder-remove"></i>
+                                    <span class="counter-count">
+                                       
+                                      
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12"  ng-click="detailsScreen('Total')">
+                        <div class="widget widget-seven">
+                            <div class="widget-body">
+                                <div href="javascript: void(0);" class="widget-body-inner">
+                                    <h5 class="text-uppercase">Total</h5>
+                                    <i class="counter-icon icmn-bug"></i>
+                                    <span class="counter-count">
+                                      
+                                      
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </section>
 </section>
 
 <%- contentFor('page_script') %>
