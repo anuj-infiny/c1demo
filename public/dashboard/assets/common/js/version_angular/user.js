@@ -17,28 +17,37 @@ angular.module('cleanUI', [
         $routeProvider.when('/admin/manage_users', {
             templateUrl: '/admin/manage_users'
         });
-
+     $routeProvider.when('/user/update_password', {
+            templateUrl: '/user/update_password'
+        });
         /////////////////////////////////////////////////////////////
         // Dashboards
         $routeProvider.when('/user/dashboard', {
             templateUrl: '/user/dashboard'
+        });
+       
+
+        $routeProvider.when('/user/networks', {
+            templateUrl: '/user/networks'
+        });
+      $routeProvider.when('/user/networkDetail', {
+            templateUrl: '/user/networkDetail'
         });
 
         $routeProvider.when('/user/update', {
             templateUrl: '/user/update'
         });
 
+
         $routeProvider.when('/user/Details', {
             templateUrl: '/user/Details'
         });
 
-        $routeProvider.when('/admin/profile', {
-            templateUrl: '/admin/profile'
+        $routeProvider.when('/user/dailyDetails', {
+            templateUrl: '/user/dailyDetails'
         });
 
-        $routeProvider.when('/admin/update_password', {
-            templateUrl: '/admin/update_password'
-        });
+       
 
         /////////////////////////////////////////////////////////////
         // Apps
@@ -434,6 +443,12 @@ $scope.groupName="";
        
 
     }
+
+    $scope.dailyDetailScreen=function()
+    {
+        console.log("daiy ");
+        $location.path("/user/dailyDetails")
+    }
      $scope.updateGroup=function(e)
      {
         e.preventDefault();
@@ -473,6 +488,11 @@ $scope.userSelect=function()
     }
    
 }
+$scope.networkDetails=function()
+{
+    console.log("yes network detail");
+    $location.path("/user/networkDetail");
+}
 $scope.detailsScreen=function(page)
 {
     console.log(page);
@@ -497,6 +517,12 @@ $scope.detailsScreen=function(page)
 
     }
     $location.path("/user/Details");
+
+}
+$scope.networksScreen=function()
+{
+     console.log("yes networks");
+     $location.path("/user/networks");
 
 }
 
@@ -603,7 +629,8 @@ $http.get("/admin/delete_user/"+userid).then(function (result) {
 }
 $scope.changePasswordScreen=function()
 {
-    $location.path("/admin/update_password");
+    console.log("here");
+    $location.path("/user/update_password");
 }
 $scope.user={};
 $scope.user.email="";

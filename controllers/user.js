@@ -32,7 +32,8 @@ exports.postUpdate = (req, res) => {
 };
 
 exports.getUpdatePassword = (req, res) => {
-  res.render('user/update_password');
+  console.log("here  ");
+  res.render('user/update_password',{layout: 'base'});
 };
 
 exports.getLogin = (req, res) => {
@@ -476,7 +477,19 @@ exports.getDetails = (req, res) => {
   res.render('user/Details', { layout: 'base' ,values : values});
 };
 
+exports.getNetworks = (req, res) => {
+        console.log("in user ");
+  res.render('user/networks', { layout: 'base'});
+};
+exports.getNetworkDetail = (req, res) => {
+        console.log("in user ");
+  res.render('user/networkDetail', { layout: 'base'});
+};
 
+exports.getdailyDetails = (req, res) => {
+        console.log("in user ");
+  res.render('user/dailyDetails', { layout: 'base' ,values : values});
+};
 
  var values=[
 {

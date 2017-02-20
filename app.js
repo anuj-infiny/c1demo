@@ -144,10 +144,14 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 
 app.get('/user/dashboard', passportConfig.isAuthenticated, userController.index);
 app.get('/user/update', passportConfig.isAuthenticated, userController.getUpdate);
+app.get('/user/networks', passportConfig.isAuthenticated, userController.getNetworks);
+app.get('/user/networkDetail', passportConfig.isAuthenticated, userController.getNetworkDetail);
 /*app.get('/user/update', passportConfig.isAuthenticated, userController.getprofile);*/
 app.post('/user/update', passportConfig.isAuthenticated, userController.postUpdate);
 app.get('/user/update_password', passportConfig.isAuthenticated, userController.getUpdatePassword);
 app.get('/user/Details', passportConfig.isAuthenticated, userController.getDetails);
+app.get('/user/dailyDetails', passportConfig.isAuthenticated, userController.getdailyDetails);
+
 app.post('/user/profile', passportConfig.isAuthenticated, userController.postProfile);
 
 // app.post('/user/getProfile', passportConfig.isAuthenticated, userController.postGetProfile);

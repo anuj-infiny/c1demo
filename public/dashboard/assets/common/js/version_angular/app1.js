@@ -413,6 +413,7 @@ app.controller('MainCtrl', function($location, $scope, $rootScope, $timeout, $ht
                 var currentPageTemplate = $route.current.templateUrl;
                 $templateCache.remove(currentPageTemplate);
                 $route.reload();
+                
             
                  //$location.path('/admin/manage_groups');
               } else {
@@ -596,9 +597,8 @@ $scope.createUser=function()
     }
     else
 {
-    jQuery('#createGroupModal').modal('toggle');
-
-             jQuery('.modal-backdrop').remove();
+    jQuery('#createUserModal').modal('toggle');
+     jQuery('.modal-backdrop').remove();
      $http.post("/admin/create_user",$scope.user).then(function (result) {
              
               if (result.data.success) {                 
