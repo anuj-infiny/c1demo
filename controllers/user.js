@@ -37,11 +37,15 @@ exports.getUpdatePassword = (req, res) => {
 };
 
 exports.getLogin = (req, res) => {
-
   if (req.user) {
     return res.redirect('/');
   }
-  res.render('account/login');
+  console.log(req.headers.referer);
+  if(req.headers.referer.includes('/dashboard/admin/index.html')  || req.headers.referer.includes('/dashboard/user/index.html')){
+    res.render('account/login_ang', {layout: 'base'});
+  } else {
+    res.render('account/login');
+  }
 };
 
 /**

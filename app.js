@@ -103,17 +103,24 @@ app.use((req, res, next) => {
   next();
 });
 app.use((req, res, next) => {
+  console.log("here 1");
+  console.log(req.user);
   // After successful login, redirect back to the intended page
   if (!req.user &&
       req.path !== '/login' &&
       req.path !== '/signup' &&
       !req.path.match(/^\/auth/) &&
       !req.path.match(/\./)) {
-    req.session.returnTo = req.path;
+     console.log("here 2");
+   console.log(req.path);
+   req.path='/login';
+    req.session.returnTo =req.path;
   } else if (req.user &&
       req.path == '/account') {
+     console.log("here 3");
     req.session.returnTo = req.path;
   }
+ 
   next();
 });
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
@@ -122,12 +129,16 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
  * Primary app routes.
  */
 app.get('/', passportConfig.isAuthenticated, function(req, res){
+  console.log(req.user.userType);
+   console.log("here");
     if(req.user.userType == 'ADMIN'){
         return res.redirect('/dashboard/admin/index.html');
     } else{
         return res.redirect('/dashboard/user/index.html');
     }
 });
+ console.log("1");
+
 
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);

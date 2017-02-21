@@ -2,11 +2,13 @@
 
 angular.module('cleanUI', [
     'ngRoute',
-    'cleanUI.controllers'
+    'cleanUI.controllers',
+    'ngIdle'
 ])
-.config(['$locationProvider', '$routeProvider',
-    function($locationProvider, $routeProvider) {
-
+.config(['$locationProvider', '$routeProvider', 'IdleProvider',
+    function($locationProvider, $routeProvider, IdleProvider) {
+         IdleProvider.idle(300);
+         IdleProvider.timeout(5);
         /////////////////////////////////////////////////////////////
         // SYSTEM
         $routeProvider.when('/', {redirectTo: '/user/dashboard'});
@@ -344,8 +346,10 @@ angular.module('cleanUI', [
 var app = angular.module('cleanUI.controllers', []);
 
 
-app.controller('MainCtrl', function($location, $scope, $rootScope, $timeout, $http, $window, $templateCache, $route ) {
-
+app.controller('MainCtrl', function(Idle, $location, $scope, $rootScope, $timeout, $http, $window, $templateCache, $route ) {
+    $scope.$on('IdleTimeout', function() {
+        window.location.href = '/logout';
+    });
     NProgress.configure({
         minimum: 0.2,
         trickleRate: 0.1,
@@ -712,3 +716,7 @@ app.directive('leftMenu', function() {
     };
 });
 
+app.run(function(Idle){
+    // start watching when the app runs. also starts the Keepalive service by default.
+    Idle.watch();
+});

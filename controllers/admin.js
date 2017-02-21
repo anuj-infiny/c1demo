@@ -4,6 +4,7 @@ var ObjectID = require('mongodb').ObjectID;
 
 
 exports.index = (req, res) => {
+	console.log("2");
   res.render('admin/dashboard', {title: 'Dashboard', tab: '', layout: 'base'});
 };
 
