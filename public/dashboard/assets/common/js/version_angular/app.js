@@ -7,7 +7,7 @@ angular.module('cleanUI', [
 ])
 .config(['$locationProvider', '$routeProvider', 'IdleProvider',
     function($locationProvider, $routeProvider, IdleProvider) {
-         IdleProvider.idle(300);
+         IdleProvider.idle(120);
          IdleProvider.timeout(5);
 
         /////////////////////////////////////////////////////////////
