@@ -442,6 +442,9 @@ app.controller('MainCtrl', function(Idle, $location, $scope, $rootScope, $timeou
        
 
     }
+
+
+    
      $scope.updateGroup=function(e)
      {
         e.preventDefault();
@@ -459,9 +462,12 @@ app.controller('MainCtrl', function(Idle, $location, $scope, $rootScope, $timeou
          {
                    
         $http.post("/admin/update_group/",$scope.groups).then(function (result) {
-                    
+                    $scope.usertype.showSuccess=result.data.success;
+                    console.log("$scope.usertype.showSuccess");
+                    console.log($scope.usertype.showSuccess);
                   if (result.data.success) {
-             var currentPageTemplate = $route.current.templateUrl;
+
+               var currentPageTemplate = $route.current.templateUrl;
                 $templateCache.remove(currentPageTemplate);
                 $route.reload();
 
@@ -476,6 +482,7 @@ app.controller('MainCtrl', function(Idle, $location, $scope, $rootScope, $timeou
  $scope.user={};
 
 $scope.usertype={};
+
 $scope.user.userType="ADMIN";
 $scope.user.userGroup="";
 $scope.user._id="";
