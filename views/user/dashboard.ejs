@@ -7,14 +7,16 @@
             </h3>
         </div>
         
-        <div class="panel-body">
-            
-            <div class="row">
+<div class="panel-body">
+    <div class="dashboard-container">   
+            <div class="row" >
                     <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12" Style="cursor:pointer" ng-click="detailsScreen('offline')">
-                        <div class="widget widget-seven background-danger"  >
+                        <div class="widget widget-seven background-success">
+                      <div class="row">
+                        <div class="col-md-12">
                             <div class="widget-body">
                                 <div href="javascript: void(0);" class="widget-body-inner">
-                                    <h5 class="text-uppercase">Offline</h5>
+                                    <h5 class="text-uppercase">Online</h5>
                                     <i class="counter-icon icmn-folder-check"></i>                                    
                                     <span class="counter-count"> 
                                     <i class="icmn-arrow-up5"></i>
@@ -22,7 +24,9 @@
                                     </span>
                                 </div>
                             </div>
-                        </div>
+                           </div>
+                          </div>  
+                    </div>
                     </div>
                     <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12" style="cursor:pointer" ng-click="detailsScreen('underreview')">
                     <div class="row">
@@ -46,10 +50,10 @@
                       <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12" style="cursor:pointer"  ng-click="detailsScreen('online')">
                         <div class="row">
                     <div class="col-md-12">
-                        <div class="widget widget-seven background-success" style="background-color:#fa1414">
+                        <div class="widget widget-seven background-danger" style="background-color:#fa1414">
                             <div class="widget-body">
                                 <div href="javascript: void(0);" class="widget-body-inner" >
-                                    <h5 class="text-uppercase" style="color:#ffffff">Online</h5><br>
+                                    <h5 class="text-uppercase" style="color:#ffffff">Offline</h5><br>
                                  <img src="../assets/common/img/Deletefolder.png"  style="height:38px; width:38px; margin-top:7px ;" alt="img" />
                                    <span class="counter-count"> 
                                     <i class="icmn-arrow-up5"></i>
@@ -63,6 +67,8 @@
             </div>
                     <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12" style="cursor:pointer"  ng-click="detailsScreen('Total')">
                         <div class="widget widget-seven">
+                        <div class="row" >
+                          <div class="col-md-12">
                             <div class="widget-body">
                                 <div href="javascript: void(0);" class="widget-body-inner">
                                     <h5 class="text-uppercase">Total</h5>
@@ -73,22 +79,31 @@
                                     </span>
                                 </div>
                             </div>
+                           </div>
+                          </div> 
                         </div>
                     </div>
                 </div>
-    <div class="row">
-            <div class="col-xl-6">
-              <div class="widget-body">
-                <div class="chart-line height-250 chartist"></div>
-            </div> 
-       </div>
-        <div class="col-xl-6 background-danger" ng-click="dailyDetailScreen()" style=" text-align:center; height:235px; width:465px;">            
-                       <h1 style="color:#ffffff;font-size:50px;">MAP</h1>                        
-                        <h2 style="font-size:150px; color:#ffffff;" >153</h2>                 
-                </div> 
-        </div>
+                        <div class="row" style="margin-top:50px" >
+                            <div class="col-xl-6 col-lg-6 col-sm-6 col-xs-1 ">
+                                <div class="widget-body">
+                                   <div href="javascript: void(0);" class="widget-body-inner">
+                                     <div class="chart-line height-250 chartist "></div>
+                                  </div> 
+                                 </div>  
+                            </div>
+                                <div class=" col-xl-6 " ng-click="mapscreen()" style=" text-align:center;">    
+                                <div class="widget-body background-danger">
+                                 <div href="javascript: void(0);" class="widget-body-inner">
+                                    <h1 style="color:#ffffff;font-size:50px;">MAP</h1>                 
+                                    <h2 style="font-size:150px; color:#ffffff;" >153</h2>
+                                 </div>               
+                             </div> 
+                           </div>   
+                       </div>
+         </div>
     </div>
-        </div>
+</div>
     </section>
 </section>
 
