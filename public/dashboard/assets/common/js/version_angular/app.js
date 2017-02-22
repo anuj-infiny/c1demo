@@ -9,7 +9,7 @@ angular.module('cleanUI', [
     function($locationProvider, $routeProvider, IdleProvider) {
          IdleProvider.idle(300);
          IdleProvider.timeout(5);
-          //KeepaliveProvider.interval(10);
+
         /////////////////////////////////////////////////////////////
         // SYSTEM
         $routeProvider.when('/', {redirectTo: '/admin/dashboard'});
@@ -335,7 +335,8 @@ var app = angular.module('cleanUI.controllers', []);
 
 
 app.controller('MainCtrl', function(Idle, $location, $scope, $rootScope, $timeout, $http, $window, $templateCache, $route ) {
-    $scope.$on('IdleTimeout', function() {
+
+	$scope.$on('IdleTimeout', function() {
         window.location.href = '/logout';
     });
 
@@ -722,7 +723,9 @@ app.directive('leftMenu', function() {
     };
 });
 
+
 app.run(function(Idle){
     // start watching when the app runs. also starts the Keepalive service by default.
     Idle.watch();
 });
+

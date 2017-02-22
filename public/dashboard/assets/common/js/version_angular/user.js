@@ -32,6 +32,10 @@ angular.module('cleanUI', [
         $routeProvider.when('/user/networks', {
             templateUrl: '/user/networks'
         });
+
+        $routeProvider.when('/user/Map', {
+            templateUrl: '/user/Map'
+        });
       $routeProvider.when('/user/networkDetail', {
             templateUrl: '/user/networkDetail'
         });
@@ -347,9 +351,11 @@ var app = angular.module('cleanUI.controllers', []);
 
 
 app.controller('MainCtrl', function(Idle, $location, $scope, $rootScope, $timeout, $http, $window, $templateCache, $route ) {
+
     $scope.$on('IdleTimeout', function() {
         window.location.href = '/logout';
     });
+	
     NProgress.configure({
         minimum: 0.2,
         trickleRate: 0.1,
@@ -452,6 +458,11 @@ $scope.groupName="";
     {
         console.log("daiy ");
         $location.path("/user/dailyDetails")
+    }
+    $scope.mapscreen=function()
+    {
+        console.log("map ");
+        $location.path("/user/Map")
     }
      $scope.updateGroup=function(e)
      {
@@ -720,3 +731,5 @@ app.run(function(Idle){
     // start watching when the app runs. also starts the Keepalive service by default.
     Idle.watch();
 });
+
+

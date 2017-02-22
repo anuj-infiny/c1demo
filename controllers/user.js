@@ -40,7 +40,6 @@ exports.getLogin = (req, res) => {
   if (req.user) {
     return res.redirect('/');
   }
-  console.log(req.headers.referer);
   if(req.headers.referer.includes('/dashboard/admin/index.html')  || req.headers.referer.includes('/dashboard/user/index.html')){
     res.render('account/login_ang', {layout: 'base'});
   } else {
@@ -493,6 +492,11 @@ exports.getNetworkDetail = (req, res) => {
 exports.getdailyDetails = (req, res) => {
         console.log("in user ");
   res.render('user/dailyDetails', { layout: 'base' ,values : values});
+};
+
+exports.getMap = (req, res) => {
+        console.log("in user ");
+  res.render('user/Map', { layout: 'base' ,values : values});
 };
 
  var values=[

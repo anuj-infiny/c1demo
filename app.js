@@ -162,6 +162,7 @@ app.post('/user/update', passportConfig.isAuthenticated, userController.postUpda
 app.get('/user/update_password', passportConfig.isAuthenticated, userController.getUpdatePassword);
 app.get('/user/Details', passportConfig.isAuthenticated, userController.getDetails);
 app.get('/user/dailyDetails', passportConfig.isAuthenticated, userController.getdailyDetails);
+app.get('/user/Map', passportConfig.isAuthenticated, userController.getMap);
 
 app.post('/user/profile', passportConfig.isAuthenticated, userController.postProfile);
 
