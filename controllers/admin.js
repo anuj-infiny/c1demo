@@ -2,6 +2,14 @@ const Group = require('../models/Group');
 const User = require('../models/User');
 var ObjectID = require('mongodb').ObjectID;
 
+exports.dashboard  = (req, res) => {
+	console.log("2");
+	if(req.user.userType == 'ADMIN'){
+  		res.render('admin/angular', {title: 'Dashboard', tab: '', layout: 'base'});
+  	} else {
+  		return res.redirect('/');
+  	}
+};
 
 exports.index = (req, res) => {
 	console.log("2");

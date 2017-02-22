@@ -11,6 +11,14 @@ var Promise = require("bluebird");
  * GET /login
  * Login page.
  */
+exports.dashboard  = (req, res) => {
+    if(req.user.userType == 'USER'){
+      res.render('user/angular', {title: 'Dashboard', tab: '', layout: 'base'});
+    } else {
+      return res.redirect('/');
+    }
+};
+
 exports.index = (req, res) => {
   res.render('user/dashboard',{layout: 'base'});
 };

@@ -139,6 +139,8 @@ app.get('/', passportConfig.isAuthenticated, function(req, res){
 });
  console.log("1");
 
+app.get('/dashboard/admin/index.html', passportConfig.isAuthenticated, adminController.dashboard);
+app.get('/dashboard/user/index.html', passportConfig.isAuthenticated, userController.dashboard);
 
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
