@@ -649,7 +649,7 @@ $scope.userPass.invalid=false;
 
 $scope.changePassword=function(e)
 {
-     e.preventDefault();
+     e.preventDefault(); 
     console.log($scope.userPass.password);
      console.log($scope.userPass.confirm_password);
      if($scope.userPass.password!=$scope.userPass.confirm_password)
