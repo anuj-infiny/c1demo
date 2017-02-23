@@ -18,34 +18,41 @@ angular.module('cleanUI', [
         /////////////////////////////////////////////////////////////
         // Documentation
         $routeProvider.when('/admin/manage_users', {
+            cache:false,
             templateUrl: '/admin/manage_users'
         });
 
         /////////////////////////////////////////////////////////////
         // Dashboards
         $routeProvider.when('/admin/dashboard', {
+            cache:false,
             templateUrl: '/admin/dashboard'
         });
 
         $routeProvider.when('/admin/manage_groups', {
+            cache:false,
             templateUrl: '/admin/manage_groups'
         });
 
         $routeProvider.when('/admin/profile', {
+            cache:false,
             templateUrl: '/admin/profile'
         });
 
         $routeProvider.when('/admin/update_password', {
+            cache:false,
             templateUrl: '/admin/update_password'
         });
 
         /////////////////////////////////////////////////////////////
         // Apps
         $routeProvider.when('/apps/profile', {
+            cache:false,
             templateUrl: 'apps/profile.html'
         });
 
         $routeProvider.when('/apps/messaging', {
+            cache:false,
             templateUrl: 'apps/messaging.html'
         });
 
@@ -382,29 +389,21 @@ app.controller('MainCtrl', function(Idle, $location, $scope, $rootScope, $timeou
     $scope.groupName="";    
     $scope.saveGroup=function(e)
     {  
-                 e.preventDefault();
-                  jQuery('#createGroupModal').modal('toggle');
-                  jQuery('.modal-backdrop').remove();
-                   
-                    if($scope.groupName.length<=0)
-                    {
-                     return;
-                    }
-
-         else{
-                $http.post("/admin/create_group",{group:$scope.groupName}).then(function (result) {
-
-                      if (result.data.success) {
-                         var currentPageTemplate = $route.current.templateUrl;
-                        $templateCache.remove(currentPageTemplate);
-                        $route.reload();
-                         //$window.location.reload();
-                         //$location.path('/admin/manage_groups');
-              } else {
-                //empty
-              }
+        e.preventDefault();
+         console.log("1");
+        jQuery('#createGroupModal').modal('toggle'); 
+        jQuery('.modal-backdrop').remove();      
+        $http.post("/admin/create_group",{group:$scope.groupName}).then(function (result) {
+        if (result.data.success) {
+            var currentPageTemplate = $route.current.templateUrl;
+            $templateCache.remove(currentPageTemplate);
+            $route.reload();
+            //$window.location.reload();
+            //$location.path('/admin/manage_groups');
+        } else {
+            //empty
+        }
         });
-    }
     };
 
    
@@ -551,7 +550,7 @@ $scope.userTemp={};
 
 $scope.editprofile=function(e)
 {
-    
+  $scope.userPass.editInvalid=false;  
 $scope.usertype.showvalue=false;
 console.log($scope.user.userType);
 console.log($scope.userTemp.password);
@@ -561,13 +560,16 @@ console.log($scope.userTemp.password);
    }
    else if($scope.userTemp.password.length<4)
    {
-    $scope.userTemp.password="";
+   
 
-        console.log("in true edit");
+        
         return  $scope.userPass.editInvalid=true; 
    }
    else
-   {   $scope.user.password=$scope.userTemp.password;
+   {   
+    $scope.user.password=$scope.userTemp.password;
+    $scope.userTemp.password="";
+    console.log("in true edit");
         console.log($scope.user.password);
    }
  
