@@ -550,6 +550,7 @@ $scope.userTemp={};
 
 $scope.editprofile=function(e)
 {
+    console.log("method hit");
   $scope.userPass.editInvalid=false;  
 $scope.usertype.showvalue=false;
 console.log($scope.user.userType);
@@ -577,14 +578,17 @@ e.preventDefault();
 
  jQuery('#editUserModal').modal('toggle');
 jQuery('.modal-backdrop').remove();
+console.log("api hit");
 $http.post("/admin/editProfile",$scope.user).then(function (result) {
       if (result.data.success) {
+        console.log("api success");
         var currentPageTemplate = $route.current.templateUrl;
         $templateCache.remove(currentPageTemplate);
         $route.reload();
         $location.path("/admin/manage_users");
          //$location.path('/admin/manage_groups');
       } else {
+        console.log("api failed");
         
       }
         });   
@@ -603,6 +607,7 @@ $scope.profileScreen=function()
 
 $scope.createUser=function()
 {
+    $scope.usertype.showvalue=false;
     console.log($scope.user.username);
     console.log($scope.user.password);
     console.log($scope.user.userType);
